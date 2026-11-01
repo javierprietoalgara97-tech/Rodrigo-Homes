@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta – Rodrigo Homes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #e8c96a;
+            --gold-dim: rgba(201,168,76,0.15);
+            --bg: #0a0a0f;
+            --bg2: #111118;
+            --bg3: #1a1a24;
+            --text: #e8e6e0;
+            --text-muted: #8a8680;
+            --border: rgba(201,168,76,0.2);
+            --success: #4caf82;
+            --error: #c96060;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: 'Lato', sans-serif; font-weight: 400; line-height: 1.7; }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; position: relative; background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%); }
+        .logo-hero { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 400; letter-spacing: 0.15em; color: #6b2d5e; margin-bottom: 2rem; }
+        .logo-hero span { font-size: 1.8rem; vertical-align: middle; margin: 0 0.05em; }
+        .client-logo { margin-bottom: 2.5rem; }
+        .client-logo img { max-width: 240px; filter: brightness(1.1); }
+        .hero-label { font-size: 0.75rem; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; max-width: 800px; }
+        .hero h1 span { color: var(--gold); }
+        .hero-sub { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 3rem; }
+        .scroll-hint { animation: bounce 2s infinite; color: var(--gold); font-size: 1.5rem; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+        .section { max-width: 820px; margin: 0 auto; padding: 5rem 2rem; }
+        .step { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .step.visible { opacity: 1; transform: translateY(0); }
+        .step-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .step-number { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); flex-shrink: 0; }
+        .step-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; }
+        .highlight { background: var(--bg3); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 1.75rem 2rem; margin: 1.5rem 0; }
+        .highlight p, .highlight li { color: var(--text); line-height: 1.8; }
+        .price-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .price-table th { color: var(--gold); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.15em; text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        .price-table td { padding: 1rem; border-bottom: 1px solid var(--border); }
+        .price-table tr:hover td { background: var(--bg3); }
+        .price-big { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold); }
+        .roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+        .roi-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 1.75rem; text-align: center; }
+        .roi-number { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+        .roi-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); }
+        .solution-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin: 1.5rem 0; }
+        .solution-card h3 { font-family: 'Playfair Display', serif; color: var(--gold-light); font-size: 1.3rem; margin-bottom: 0.75rem; }
+        .solution-card p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.95rem; }
+        .benefit-list { list-style: none; }
+        .benefit-list li { padding: 0.4rem 0 0.4rem 1.75rem; position: relative; }
+        .benefit-list li::before { content: '✓'; color: var(--gold); position: absolute; left: 0; font-weight: 700; }
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0; }
+        .include-col h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .include-col.yes h3 { color: var(--success); }
+        .include-col.no h3 { color: var(--error); }
+        .include-list { list-style: none; }
+        .include-list li { padding: 0.35rem 0 0.35rem 1.5rem; position: relative; font-size: 0.95rem; color: var(--text-muted); }
+        .include-col.yes .include-list li::before { content: '✓'; color: var(--success); position: absolute; left: 0; }
+        .include-col.no .include-list li::before { content: '×'; color: var(--error); position: absolute; left: 0; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 1.5rem 0; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-q { font-weight: 700; color: var(--text); margin-bottom: 0.75rem; }
+        .faq-a { color: var(--text-muted); font-size: 0.95rem; }
+        .steps-ol { list-style: none; counter-reset: step; }
+        .steps-ol li { counter-increment: step; padding: 1rem 0 1rem 3.5rem; position: relative; border-bottom: 1px solid var(--border); }
+        .steps-ol li:last-child { border-bottom: none; }
+        .steps-ol li::before { content: counter(step); position: absolute; left: 0; top: 1rem; width: 32px; height: 32px; border-radius: 50%; background: var(--gold-dim); border: 1px solid var(--gold); color: var(--gold); font-family: 'Playfair Display', serif; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+        .signature-box { background: var(--bg3); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 2rem 2.5rem; margin-top: 2rem; }
+        .signature-name { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold); margin-bottom: 0.25rem; }
+        .signature-meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.2rem; }
+        .signature-commitment { margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted); font-style: italic; }
+        footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
+        footer strong { color: var(--text); }
+        .arrow-list { list-style: none; }
+        .arrow-list li { padding: 0.5rem 0 0.5rem 2rem; position: relative; }
+        .arrow-list li::before { content: '→'; color: var(--gold); position: absolute; left: 0; }
+        @media (max-width: 600px) { .roi-grid { grid-template-columns: 1fr; } .two-cols { grid-template-columns: 1fr; } }
+        .cost-table { width: 100%; border-collapse: collapse; margin: 0 0 0.5rem; }
+        .cost-table td { padding: 0.7rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text); font-size: 0.95rem; vertical-align: top; }
+        .cost-table td small { display: block; color: var(--text-muted); font-size: 0.82rem; margin-top: 0.2rem; }
+        .cost-table td:last-child { text-align: right; color: var(--gold); font-weight: 700; }
+        .flow { list-style: none; counter-reset: flow; margin: 1rem 0 1.5rem; }
+        .flow li { counter-increment: flow; position: relative; padding: 0.6rem 0 0.6rem 2.6rem; }
+        .flow li::before { content: counter(flow); position: absolute; left: 0; top: 0.65rem; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--gold); color: var(--gold); font-size: 0.8rem; display: flex; align-items: center; justify-content: center; }
+        .price-note { display: block; color: var(--text-muted); font-size: 0.82rem; margin-top: 0.2rem; }
+        @media (max-width: 600px) { .section { padding: 3.5rem 1.25rem; } .highlight { padding: 1.4rem 1.25rem; } .solution-card { padding: 1.5rem 1.25rem; } .price-table td, .price-table th { padding: 0.7rem 0.4rem; } .roi-number { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <div class="client-logo">
+        <img src="data:image/png;base64,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" alt="Rodrigo Homes">
+    </div>
+    <div class="hero-label">Propuesta Comercial · Noviembre 2026</div>
+    <h1>Un agente de WhatsApp que <span>contacta, cualifica</span> y agenda llamadas con los leads que quieren comprar</h1>
+    <p class="hero-sub">Preparada para Ángel Meroño y el equipo de <span class="param-cliente">Rodrigo Homes</span></p>
+    <div class="scroll-hint">↓</div>
+</section>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">1</div>
+        <h2>Por qué debes leer este presupuesto</h2>
+    </div>
+    <div class="highlight">
+        <p>Aunque no lleguemos a colaborar, lo que vas a encontrar aquí tiene valor por sí mismo.</p>
+        <br>
+        <p>En nuestras reuniones me quedó muy claro el problema: el equipo de <span class="param-cliente">Rodrigo Homes</span> pierde horas cada día intentando contactar por email a personas que no contestan. Mientras tanto, los leads que sí quieren comprar esperan, o se van a la competencia.</p>
+        <br>
+        <p>Este documento recoge lo que vimos juntos en la demo y lo que ajustamos en la última reunión. Es una hoja de ruta concreta: pasar a WhatsApp, contactar a cada lead en el momento en que muestra interés y llenar la agenda del equipo comercial solo con llamadas de quien realmente quiere comprar.</p>
+    </div>
+</div>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">2</div>
+        <h2>Precio y retorno de inversión</h2>
+    </div>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Sé que lo primero que todos miramos en una propuesta es el precio, así que vamos directo:</p>
+    <table class="price-table">
+        <thead>
+            <tr>
+                <th>Concepto</th>
+                <th>Tipo</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Implementación del Agente WhatsApp</td>
+                <td style="color: var(--text-muted);">Pago único</td>
+                <td><span class="price-big">1.000 €</span></td>
+            </tr>
+            <tr>
+                <td>Mantenimiento y soporte mensual<span class="price-note">Incluye 2 horas al mes de corrección de errores y modificaciones menores</span></td>
+                <td style="color: var(--text-muted);">Mensual</td>
+                <td><span class="price-big">100 €/mes</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="roi-grid">
+        <div class="roi-card">
+            <span class="roi-number">1 venta</span>
+            <span class="roi-label">basta para pagar<br>el agente durante años</span>
+        </div>
+        <div class="roi-card">
+            <span class="roi-number">22h</span>
+            <span class="roi-label">al mes que el equipo<br>deja de perder en emails</span>
+        </div>
+    </div>
+    <div class="highlight">
+        <p><strong>¿Qué significa esto en dinero?</strong></p>
+        <br>
+        <p>En el sector inmobiliario, una sola operación cerrada genera mucho más de lo que cuesta el agente en varios años. Si el agente consigue que un solo lead que hoy se pierde acabe comprando, la inversión ya está pagada.</p>
+        <br>
+        <p>Y hay motivos para esperar más de una. Hoy los leads se contactan tarde y por email. El agente les escribe por WhatsApp en el mismo momento en que dejan sus datos, cuando todavía tienen el interés fresco. Ese contacto inmediato es lo que más mejora la tasa de respuesta.</p>
+        <br>
+        <p>Además, el equipo recupera la hora diaria que hoy dedica a escribir correos que nadie contesta, y la dedica a llamadas con leads ya cualificados.</p>
+    </div>
+</div>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">3</div>
+        <h2>¿Qué vamos a resolver?</h2>
+    </div>
+    <div class="highlight">
+        <p>Lo que me contaste en las reuniones fue clarísimo. Aquí está resumido:</p>
+    </div>
+    <ul class="arrow-list" style="margin-top: 1.5rem;">
+        <li>El equipo pierde 1 hora al día enviando correos a leads que no responden. El email está prácticamente muerto para este tipo de contacto.</li>
+        <li>Los leads se contactan tarde. Cuanto más tiempo pasa desde que dejan sus datos, menos probable es que respondan.</li>
+        <li>Los leads llegan de las campañas de Meta Ads y de la web, y hoy no hay un proceso unificado para gestionarlos.</li>
+        <li>El equipo comercial dedica tiempo a filtrar a mano quién quiere comprar y quién solo quiere información, en lugar de dedicarlo a vender.</li>
+        <li>Parte de las llamadas agendadas se pierden porque el lead no se presenta.</li>
+    </ul>
+</div>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">4</div>
+        <h2>Lo que voy a construir para vosotros</h2>
+    </div>
+    <div class="solution-card">
+        <h3>Agente de Cualificación WhatsApp · 24/7</h3>
+        <p>Un agente conversacional basado en Claude, el modelo de inteligencia artificial que visteis en la demo, conectado a vuestro número de WhatsApp Business. Así trabaja con cada lead:</p>
+        <ol class="flow">
+            <li><strong>Contacto inmediato.</strong> El lead deja sus datos en un formulario de Meta Ads o en la web, y el agente le escribe por WhatsApp al momento.</li>
+            <li><strong>Cualificación.</strong> El agente sigue un guion de preguntas que definimos juntos y etiqueta al lead como caliente o templado.</li>
+            <li><strong>Agendamiento.</strong> Si el lead es caliente, el agente le propone tres horarios para una llamada con el equipo comercial y la agenda en Google Calendar.</li>
+            <li><strong>Recordatorios.</strong> Antes de la llamada, el agente envía recordatorios automáticos para reducir las ausencias.</li>
+        </ol>
+        <ul class="benefit-list">
+            <li>Entiende texto, audios, imágenes y documentos PDF.</li>
+            <li>Lee todos los mensajes que envía el lead antes de responder, como haría una persona.</li>
+            <li>Recuerda las conversaciones anteriores, así que puede retomar el hilo días después.</li>
+            <li>Conversa en cualquier idioma, algo muy útil con compradores extranjeros.</li>
+            <li>Se presenta siempre como asistente virtual, tal como exige la normativa de la Unión Europea.</li>
+            <li>Funciona 24 horas al día, 7 días a la semana. Ningún lead espera hasta el lunes.</li>
+        </ul>
+    </div>
+    <div class="solution-card">
+        <h3>Integración con HubSpot</h3>
+        <p>Cada lead cualificado llega a vuestro CRM con su estado y el motivo de esa clasificación.</p>
+        <ul class="benefit-list">
+            <li>El equipo ve todos los leads en HubSpot sin tener que revisar WhatsApp.</li>
+            <li>Los leads templados quedan registrados para hacerles seguimiento más adelante.</li>
+            <li>Los leads calientes llegan a la llamada con el contexto completo: qué buscan y cuándo quieren comprar.</li>
+        </ul>
+    </div>
+    <div class="solution-card">
+        <h3>Chatwoot · Intervención humana</h3>
+        <p>Desde Chatwoot, cualquier persona del equipo puede ver las conversaciones y tomar el control cuando lo necesite.</p>
+        <ul class="benefit-list">
+            <li>El agente guarda el contexto de cada conversación, así que el paso a una persona es fluido.</li>
+            <li>El lead no tiene que repetir nada de lo que ya ha contado.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">5</div>
+        <h2>Una herramienta para el equipo comercial, no un sustituto</h2>
+    </div>
+    <div class="highlight">
+        <p>Es razonable pensar que la solución pasa por que el equipo comercial rinda más. Este agente va justo en esa dirección.</p>
+        <br>
+        <p>El agente no vende ni sustituye a nadie. Se encarga de la parte que no aporta valor: escribir a cada lead, perseguir a los que no contestan y separar a los curiosos de los compradores. Lo que llega al equipo son llamadas agendadas con leads calientes, que es donde un buen comercial marca la diferencia.</p>
+        <br>
+        <p>Además, con el agente en marcha el rendimiento del equipo se puede medir mejor. Cada lead queda registrado en HubSpot con su estado, así que se ve con claridad cuántas llamadas se agendan y cuántas acaban en venta.</p>
+    </div>
+</div>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">6</div>
+        <h2>Plazos de inicio y desarrollo</h2>
+    </div>
+    <div class="highlight">
+        <p><strong>Fecha de inicio:</strong> <span class="param-fecha">4 días después de confirmar la propuesta</span></p>
+        <br>
+        <p>Ese primer día hacemos la sesión de onboarding: organizamos los accesos, creamos las cuentas necesarias en Hostinger, WhatsApp Business API y la plataforma de Claude, y conectamos HubSpot y Google Calendar. También definimos juntos el guion de cualificación y los criterios para que el agente sepa cuándo un lead es caliente.</p>
+        <br>
+        <p><strong>Duración del desarrollo:</strong> estimamos entre 1 y 2 semanas desde el onboarding hasta tener el agente operativo y en producción.</p>
+    </div>
+</div>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">7</div>
+        <h2>Qué está incluido y qué no</h2>
+    </div>
+    <div class="two-cols">
+        <div class="include-col yes">
+            <h3>✓ Incluido</h3>
+            <ul class="include-list">
+                <li>Sesión de onboarding y arranque del proyecto</li>
+                <li>Reuniones de seguimiento durante el desarrollo</li>
+                <li>Agente de cualificación WhatsApp con Claude</li>
+                <li>Conexión con formularios de Meta Ads y leads de la web</li>
+                <li>Agendamiento de llamadas en Google Calendar</li>
+                <li>Recordatorios automáticos antes de cada llamada</li>
+                <li>Integración con HubSpot CRM</li>
+                <li>Chatwoot para la intervención humana</li>
+                <li>Instalación de n8n y Chatwoot en el servidor</li>
+                <li>Pruebas y ajustes antes del lanzamiento</li>
+                <li>Formación del equipo para usar el sistema</li>
+                <li>Mantenimiento con 2 horas al mes de corrección de errores y modificaciones menores</li>
+                <li>Infraestructura Redis y Supabase, sin coste</li>
+            </ul>
+        </div>
+        <div class="include-col no">
+            <h3>× No incluido (coste del cliente)</h3>
+            <table class="cost-table">
+                <tr><td>Servidor en Hostinger<small>Aloja n8n y Chatwoot</small></td><td>25–30 €/mes</td></tr>
+                <tr><td>Consumo de Claude<small>Tokens en la plataforma de Claude, según volumen</small></td><td>~10 €/mes</td></tr>
+                <tr><td>Mensajes de WhatsApp Business API<small>Los cobra Meta directamente, según volumen</small></td><td>Variable</td></tr>
+                <tr><td>Tarjeta SIM para el número de WhatsApp<small>Compra única</small></td><td>Cliente</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">8</div>
+        <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq-item">
+        <p class="faq-q">¿El lead sabe que está hablando con una inteligencia artificial?</p>
+        <p class="faq-a">Sí. El agente se presenta como asistente virtual al inicio de la conversación, como exige la normativa europea. Aun así, conversa de forma natural y cercana, y cualquier persona del equipo puede entrar en la conversación desde Chatwoot.</p>
+    </div>
+    <div class="faq-item">
+        <p class="faq-q">¿Qué pasa si necesitamos añadir nuevas automatizaciones después del lanzamiento?</p>
+        <p class="faq-a">El mantenimiento incluye 2 horas al mes para corregir errores y hacer modificaciones menores. Para nuevas funcionalidades o flujos adicionales, lo valoramos juntos y lo presupuestamos aparte. Nada encarece la propuesta sin que lo sepáis de antemano.</p>
+    </div>
+    <div class="faq-item">
+        <p class="faq-q">¿Y si el equipo no entiende algo del sistema?</p>
+        <p class="faq-a">La formación está incluida en la implementación y el soporte mensual cubre exactamente eso. Estoy a un mensaje de distancia para cualquier duda. El objetivo es que el sistema funcione sin que tengáis que pensar en él.</p>
+    </div>
+    <div class="faq-item">
+        <p class="faq-q">¿Podemos pagar todo al final del proyecto?</p>
+        <p class="faq-a">El pago de implementación se realiza al inicio del proyecto, antes del onboarding. Esto me permite trabajar con total dedicación desde el primer día. El mantenimiento empieza a correr el mes siguiente al lanzamiento en producción.</p>
+    </div>
+</div>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">9</div>
+        <h2>Cómo pagamos</h2>
+    </div>
+    <p style="margin-bottom: 1.5rem;">Una vez confirmada la aceptación de la propuesta, te envío mis datos bancarios.</p>
+    <div class="highlight">
+        <p><strong>1.000 €</strong> de implementación al inicio, para arrancar el proyecto con total dedicación.</p>
+        <br>
+        <p>Luego, <strong>100 €/mes</strong> de mantenimiento a partir del mes siguiente al lanzamiento en producción.</p>
+        <br>
+        <p><strong>Concepto de la transferencia:</strong> Agente de WhatsApp Rodrigo Homes</p>
+    </div>
+</div>
+
+<div class="section step">
+    <div class="step-header">
+        <div class="step-number">10</div>
+        <h2>Próximos pasos</h2>
+    </div>
+    <p style="margin-bottom: 1.5rem;">Esto es lo que propongo que hagamos ahora, <span class="param-cliente">Ángel</span>:</p>
+    <ol class="steps-ol">
+        <li>Confirmar por escrito la aceptación de la propuesta.</li>
+        <li>Realizar el primer pago de 1.000 € correspondiente a la implementación.</li>
+        <li>Agendar la sesión de onboarding, donde definiremos: accesos a HubSpot, Meta Ads y Google Calendar, número de WhatsApp y SIM, guion de cualificación, criterios para identificar un lead caliente y fechas exactas de desarrollo.</li>
+    </ol>
+    <p style="margin-top: 2rem; color: var(--text-muted);">Desde ahí, empezamos a construir.</p>
+    <p style="margin-top: 0.5rem; color: var(--text-muted);">Si surge cualquier duda o quieres ajustar algún punto, estoy a una respuesta de distancia.</p>
+    <p style="margin-top: 0.5rem; color: var(--text-muted);">Gracias por vuestra confianza.</p>
+    <div class="signature-box">
+        <p class="signature-name">Javier Prieto Algara</p>
+        <p class="signature-meta">Consultor de Automatización e IA</p>
+        <p class="signature-meta">Murcia, España</p>
+        <p class="signature-commitment">Me comprometo a trabajar con la máxima dedicación para que el sistema esté operativo en los plazos acordados y supere vuestras expectativas.</p>
+    </div>
+</div>
+
+<footer>
+    <p>Propuesta preparada por <strong>Javier Prieto Algara</strong> · Consultor de Automatización e IA</p>
+    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Documento confidencial preparado exclusivamente para <span class="param-cliente">Rodrigo Homes</span>. No distribuir sin consentimiento.</p>
+</footer>
+
+<script>
+(function() {
+    const params = new URLSearchParams(window.location.search);
+    const cliente = params.get('cliente');
+    const fecha = params.get('fecha');
+    if (cliente) {
+        document.querySelectorAll('.param-cliente').forEach(el => el.textContent = cliente);
+        document.title = 'Propuesta – ' + cliente;
+    }
+    if (fecha) {
+        document.querySelectorAll('.param-fecha').forEach(el => el.textContent = fecha);
+    }
+})();
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.step').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
